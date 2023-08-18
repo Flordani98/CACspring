@@ -1,81 +1,108 @@
-package PracticaNivelacion;
+package PracticaNivelacion1;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
+
+import static PracticaNivelacion1.Herramienta.horaActual;
+import static PracticaNivelacion1.Herramienta.obtenerEstadoRandom;
 
 public class MascotaVirtual {
     private String nombre;
     private int nivel; //>=0
-
     private Estados estado; //puede ser enum: aburrida, hambrienta o contenta
+    private LocalTime horaEstadoActual; //hora en la que se le asigno el estado actual
 
 
+    //region CONSTRUCTORES
     public MascotaVirtual(){}
 
     public MascotaVirtual(String nombre){
         this.nombre = nombre;
         this.nivel = 0;
         this.estado = obtenerEstadoRandom();
+        this.horaEstadoActual = horaActual();
 
     }
 
-    //Obtener un estado random
-    public Estados obtenerEstadoRandom(){
-        Estados estado = null;
-        Random numAleatorio = new Random();
-        int num = numAleatorio.nextInt(1, 4);
+    //endregion
 
-        switch (num) {
-            case 1 -> estado = Estados.HAMBRIENTO;
-            case 2 -> estado = Estados.CONTENTO;
-            case 3 -> estado = Estados.ABURRIDO;
-            default -> System.out.println("Error");
-        }
-        
+    //region GETTERS AND SETTERS
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public Estados getEstado() {
         return estado;
     }
+
+    public void setEstado(Estados estado) {
+        this.estado = estado;
+    }
+
+    public LocalTime getHoraEstadoActual() {
+        return horaEstadoActual;
+    }
+
+    public void setHoraEstadoActual(LocalTime horaEstadoActual) {
+        this.horaEstadoActual = horaEstadoActual;
+    }
+//endregion
+
+
+    //region METODOS
+    public void comer(){
+
+        switch (estado) {
+            case HAMBRIENTO -> setEstado(Estados.CONTENTO);
+            case CONTENTO -> nivel++;
+            case ABURRIDO -> {
+                LocalTime hora = horaActual();
+                int segundosActual = hora.getSecond();
+                int tiempoSegundosEstado = horaEstadoActual.getSecond();
+                if ((segundosActual - tiempoSegundosEstado) > 20) {
+                    setEstado(Estados.CONTENTO);
+                }
+            }
+            default -> System.out.println("Error, la mascota no tiene un estado preedefinido");
+        }
+
+        setHoraEstadoActual(horaActual());
+    }
+
+    public void jugar(){
+
+        switch (estado) {
+            case HAMBRIENTO -> System.out.println("Estoy hambrienta y no puedo jugar");
+            case CONTENTO -> nivel += 2;
+            case ABURRIDO -> setEstado(Estados.CONTENTO);
+            default -> System.out.println("Error, la mascota no tiene un estado preedefinido");
+        }
+
+        setHoraEstadoActual(horaActual());
+    }
+
+    //endregion
 
     @Override
     public String toString() {
         return "-Mascota Virtual- " +
                 "\nNombre: " + nombre +
                 "\nNivel: " + nivel +
-                "\nEstado: " + estado;
+                "\nEstado: " + estado +
+                "\nHora del estado actual de la mascota: " + horaEstadoActual;
     }
 
-    /*    public void comer(){
-        LocalDateTime horaActual = LocalDateTime.now();
-        int hora = horaActual.getHour();
-        int minutos = horaActual.getMinute();
-
-        if (estado.equals("hambrienta")) {
-            estado = "contenta";
-        }
-        if (estado.equals("contenta")) {
-            nivel++;
-        }
-        if (estado.equals("aburrida")) {
-            //verificar cuanto tiempo esta aburrida
-            // if(tiempoAburrida < 81 minutos){
-            //no se hace nada
-//              else{
-            //estado = "contenta"
-        //}
-            //}
-        }
-
-    }
-    public void jugar(){
-        if (estado.equals("hambrienta")) {
-            //nada, no puede jugar
-
-        }
-        if (estado.equals("contenta")) {
-            nivel += 2;
-        }
-        if (estado.equals("aburrida")) {
-            estado = "contenta";
-        }
-
-    }*/
 }

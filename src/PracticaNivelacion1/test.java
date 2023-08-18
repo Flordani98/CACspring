@@ -1,4 +1,4 @@
-package PracticaNivelacion;
+package PracticaNivelacion1;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -10,12 +10,9 @@ public class test {
 //        System.out.println("1. Crear mascota");
 //        System.out.println("Ingrese un nombre para su mascota:");
 
-//        probandoEstadosMascota();
-        probandoRandom();
-        probandoRandom();
-        probandoRandom();
-        probandoRandom();
-        probandoRandom();
+        probandoEstadosMascota();
+//        probandoRandom();
+
     }
     public static void probandoFormatoHora(){
         LocalTime horaActual = LocalTime.now();
@@ -30,7 +27,15 @@ public class test {
     public static void probandoEstadosMascota(){
         MascotaVirtual mascota = new MascotaVirtual("Negrita");
         System.out.println(mascota);
-        
+        System.out.println("----------------------------------------");
+        mascota.comer();
+        System.out.println(mascota);
+        System.out.println("----------------------------------------");
+        mascota.comer();
+        System.out.println(mascota);
+        System.out.println("----------------------------------------");
+
+
 
     }
 
