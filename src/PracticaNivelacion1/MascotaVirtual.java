@@ -6,6 +6,7 @@ import java.util.Random;
 
 import static PracticaNivelacion1.Herramienta.horaActual;
 import static PracticaNivelacion1.Herramienta.obtenerEstadoRandom;
+//TODO: realiza punto 2 de la practica de nivelacion, tests unitarios
 
 public class MascotaVirtual {
     private String nombre;
@@ -104,5 +105,7 @@ public class MascotaVirtual {
                 "\nEstado: " + estado +
                 "\nHora del estado actual de la mascota: " + horaEstadoActual;
     }
+
+
 
 }
